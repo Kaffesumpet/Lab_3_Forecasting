@@ -1,7 +1,21 @@
 import numpy as np
 import pandas as pd
+from statsmodels.tsa.stattools import adfuller
+import matplotlib.pyplot as plt
+from pmdarima import auto_arima
+from statsmodels.tsa.arima.model import ARIMA
 
-# Code provided by Auday, beside the read_csv fix by Nicklas
+#######################################################################################
+# Jag var tvungen att uppdatera mitt Conda, installera pdarima i anaconda powershell - Nicklas
+# conda install -c conda-forge pmdarima
+#########################################################################################
+# Appen gör så att en tabell skrivs ut först, 
+# sedan efter varje minut skrivs ut en ny tabell vilket innehåller forecast
+#########################################################################################
+
+# Code provided by Auday
+# Comments and fixes by Nicklas
+# Jag tror koden härstammar från google colab, därav lite fixes här och där
 
 data = pd.read_csv('dataset.csv', index_col='date')
 
@@ -9,9 +23,6 @@ data = pd.read_csv('dataset.csv', index_col='date')
 data.head()
 
 data.describe()
-
-from statsmodels.tsa.stattools import adfuller
-import matplotlib.pyplot as plt
 
 # Splitting the dataset into training and testing sets
 train_size = int(len(data) * 0.7)
@@ -30,10 +41,7 @@ plt.ylabel('CO2')
 plt.legend()
 plt.show()
 
-adf_result
-
-#######################################################################################
-from pmdarima import auto_arima
+adf_result # Fattar inte riktigt vad denna gör
 
 train = train["CO2"]
 # Use auto_arima to find the best ARIMA model for our data
@@ -44,13 +52,14 @@ auto_model.summary()
 
 
 #######################################################################################
-# Re-importing necessary libraries and re-loading the data due to execution state reset
-import pandas as pd
-from statsmodels.tsa.arima.model import ARIMA
-import matplotlib.pyplot as plt
+# Re-importing necessary libraries and re-loading the data due to execution state reset - Auday
+# Jag tror inte vi behöver göra reimports av libraries, utan endast av datan
+# import pandas as pd
+# import matplotlib.pyplot as plt
+#######################################################################################
 
-# Load the dataset again
-data = pd.read_csv('C:/Users/vpp/OneDrive - Högskolan Dalarna/Desktop/Teaching/Distributed computing/Lab/dataset.csv', index_col='date')
+# Reload data
+data = pd.read_csv('dataset.csv', index_col='date')
 
 data.index.freq = '1min'
 
@@ -74,7 +83,6 @@ train.index = train.index.to_timestamp()
 test.index = test.index.to_timestamp()
 forecast.index = forecast.index.to_timestamp()
 
-
 # Compare the forecasted values with the actual values
 plt.figure(figsize=(10, 6))
 plt.plot(train.index, train, label='Train')
@@ -91,7 +99,3 @@ print(forecast.shape, test.shape)
 # # Mean Absolute Error (MAE)
 MAE = np.mean(abs(forecast - test))
 print('Mean Absolute Error (MAE): ' + str(np.round(MAE, 2)))
-
-
-
-
