@@ -19,14 +19,14 @@ train, test = data.iloc[:train_size], data.iloc[train_size:]
 adf_result = adfuller(train['CO2'])
 
 # Plot the temperature data
-plt.figure(figsize=(10, 6))
-plt.plot(train['CO2'], label='Train')
-plt.plot(test['CO2'], label='Test')
-plt.title('CO2 Levels Over Time')
-plt.xlabel('Date')
-plt.ylabel('CO2')
-plt.legend()
-plt.show()
+# plt.figure(figsize=(10, 6))
+# plt.plot(train['CO2'], label='Train')
+# plt.plot(test['CO2'], label='Test')
+# plt.title('CO2 Levels Over Time')
+# plt.xlabel('Date')
+# plt.ylabel('CO2')
+# plt.legend()
+# plt.show()
 
 print(adf_result)
 
@@ -61,21 +61,15 @@ split_point = int(0.7 * len(temp_data))
 train, test = temp_data[:split_point], temp_data[split_point:]
 
 # Fit the ARIMA(2,1,2) model to the training data
-model = ARIMA(train, order=(2,1,2))
+model = ARIMA(train, order=(3,1,1))
 fitted_model = model.fit()
 print(fitted_model.summary()) 
+
 
 # Make predictions on the test data
 forecast = fitted_model.forecast(steps=len(test))
 
-forecast_steps = 90
-forecast_values = fitted_model.predicts(start= len(train) + forecast_steps - 1, dynamic = False)
-print(forecast_values)
 
-forecast_dates = pd.data_range(start = train.index[-1] + pd.Timedelta(days = 1), periods = forecast_steps, frq = "D")
-
-plt.plot(train.index, train["Values"], label = "Original data")
-plt.plot(forecast_dates, forecast_values, color = "red", label = "Forecast")
 # Before plotting, convert the PeriodIndex back to DatetimeIndex
 train.index = train.index.to_timestamp()
 test.index = test.index.to_timestamp()
