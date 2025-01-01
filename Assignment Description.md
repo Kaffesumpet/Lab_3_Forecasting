@@ -13,13 +13,23 @@ Moving Average (MA): The MA component models the error of the model as a combina
 
 Tasks:
 
-1. You need to analyse multiple columns of the provided dataset. Show scatterplots and correlation matrices of chosen columns. Explain what you understood.
+1. You need to analyse multiple columns of the provided dataset. 
+   1.1. Show scatterplots and 
+   1.2. Correlation matrices of chosen columns. 
+   1.3. Explain what you understood.
+
 2. Use “adfuller” to understand if your data is stationary
+
 3. Use “auto_arima” to find the best ARIMA model parameters
+
 4. Forecasting: Train and test CO2 data with 70% training and 30% test. You can increase the training size upto 80%.
+
 5. Plot your forecast with actual values as shown in the below figure. Use stepwise approach for better forecast values.
+
 6. Show MAE value of the test
+
 7. Discuss your results and provide your reflection
+
 
 Presentation: Record a video in which you explain your results and upload it to your YouTube channel. Maximum time of recording should be 10 minutes.
 Lab 3 needs to be submitted no later than Jan/10 23.59 in the submission folder on Learn/Assignment/Labs/Lab3.

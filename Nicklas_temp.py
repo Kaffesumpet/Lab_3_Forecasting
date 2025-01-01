@@ -57,13 +57,15 @@ auto_model.summary()
 # import pandas as pd
 # import matplotlib.pyplot as plt
 #######################################################################################
+# För att nästa del av koden ska köra så måste du stänga ner figure 1 # 
+#####
 
 # Reload data
 data = pd.read_csv('dataset.csv', index_col='date')
 
 data.index.freq = '1min'
 
-data.index = pd.DatetimeIndex(data.index).to_period('1min')
+data.index = pd.DatetimeIndex(data.index).to_period('1min') 
 
 temp_data = data['CO2']
 
