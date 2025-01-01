@@ -52,29 +52,28 @@ print(f"ADF Statistic: {adf_result[0]}, p-value: {adf_result[1]}")
 train = train["CO2"]
 
 
-#auto_model = auto_arima(
-#    train, 
-#    seasonal=False, 
-#    trace=True, 
-#    error_action='ignore', 
-#    suppress_warnings=True,
-#    stepwise=False,  # Disable stepwise search for a full grid search
-#    max_p=6,         
-#    max_d=3,         
-#    max_q=6
-#)
-## Display the summary of the best model found
-#auto_model.summary()
+# auto_model = auto_arima(
+#     train, 
+#     seasonal=False, 
+#     trace=True, 
+#     error_action='ignore', 
+#     suppress_warnings=True,
+#     stepwise=False,  # Disable stepwise search for a full grid search
+#     max_p=6,         
+#     max_d=0,         
+#     max_q=6
+# )
+# # Display the summary of the best model found
+# auto_model.summary()
+
+#stepwise_fit = auto_arima(train, start_p=1, start_q=1, max_p=10, max_q=10, m=1,
+#                           start_P=0, seasonal=False, d=None, D=1, trace=True,
+#                           error_action='ignore',  
+#                           suppress_warnings=True,  
+#                           stepwise=True)           
+#stepwise_fit.summary()
 
 
-#######################################################################################
-# Re-importing necessary libraries and re-loading the data due to execution state reset - Auday
-# Jag tror inte vi behöver göra reimports av libraries, utan endast av datan
-# import pandas as pd
-# import matplotlib.pyplot as plt
-#######################################################################################
-# För att nästa del av koden ska köra så måste du stänga ner figure 1 # 
-#######################################################################################
 
 # Reload data
 data = pd.read_csv('dataset.csv', index_col='date')
@@ -86,33 +85,36 @@ temp_data = data['CO2']
 # Split the data into train and test sets (70% train, 30% test)
 split_point = int(0.7 * len(temp_data))
 train, test = temp_data[:split_point], temp_data[split_point:]
+
                                       
 # Use auto_arima to find the best ARIMA model for our data
 # 2: The number of autoregressive terms (AR).
 # 1: The degree of differencing (I).
-# 2: The number of moving average terms (MA).                     
+# 2: The number of moving average terms (MA).    
+  
+              
 # Fit the ARIMA(2,1,2) model to the training data (auday use 4.0.2)
 # Testing with other numbers seems to be either indifferent or cause flatlining
 # 6,0,2 gave result
-order = (4, 0, 12)
-model = ARIMA(train, order=order)
+#model = ARIMA(train, order=stepwise_fit.order)
+model = ARIMA(train, order=(4, 2, 4))
 fitted_model = model.fit()
 print(fitted_model.summary())
 
 # Make predictions on the test data
-forecast_arima = fitted_model.forecast(steps=len(test))
+forecast = fitted_model.forecast(steps=len(test))
 
 # Make predictions using the stepwise ARIMA model
 
 train.index = train.index.to_timestamp()
 test.index = test.index.to_timestamp()
-forecast_arima.index = forecast_arima.index.to_timestamp()
+forecast.index = forecast.index.to_timestamp()
 
 # Plot comparison of forecasts and actual values
 plt.figure(figsize=(10, 6))
 plt.plot(train.index, train, label='Train')
 plt.plot(test.index, test, label='Test', color='green')
-plt.plot(forecast_arima.index, forecast_arima, label=f'ARIMA {order} Forecast', linestyle='--')
+plt.plot(forecast.index, forecast, label=f'ARIMA Forecast', linestyle='--')
 plt.title('CO2 Forecast vs Actual')
 plt.xlabel('Date')
 plt.ylabel('CO2 Levels')
@@ -120,10 +122,10 @@ plt.legend()
 plt.show()
 
 # Evaluate Mean Absolute Error (MAE)
-mae_arima = np.mean(abs(forecast_arima - test))
+mae_arima = np.mean(abs(forecast - test))
 
-print(f"ARIMA(4,0,2) MAE: {mae_arima:.2f}")
+print(f"ARIMA {stepwise_fit.order} MAE: {mae_arima:.2f}")
 
 # # Mean Absolute Error (MAE)
-# MAE = np.mean(abs(forecast - test))
-# print('Mean Absolute Error (MAE): ' + str(np.round(MAE, 2)))
+MAE = np.mean(abs(forecast - test))
+print('Mean Absolute Error (MAE): ' + str(np.round(MAE, 2)))

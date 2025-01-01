@@ -25,30 +25,30 @@ data.head()
 data.describe()
 
 # Splitting the dataset into training and testing sets
-train_size = int(len(data) * 0.8)
+train_size = int(len(data) * 0.7)
 train, test = data.iloc[:train_size], data.iloc[train_size:]
 
 # Check for stationarity in the CO2 data
 adf_result = adfuller(train['CO2'])
 
 # Plot the temperature data
-plt.figure(figsize=(10, 6))
-plt.plot(train['CO2'], label='Train')
-plt.plot(test['CO2'], label='Test')
-plt.title('CO2 Levels Over Time')
-plt.xlabel('Date')
-plt.ylabel('CO2')
-plt.legend()
-plt.show()
+#plt.figure(figsize=(10, 6))
+#plt.plot(train['CO2'], label='Train')
+#plt.plot(test['CO2'], label='Test')
+#plt.title('CO2 Levels Over Time')
+#plt.xlabel('Date')
+#plt.ylabel('CO2')
+#plt.legend()
+#plt.show()
 
 adf_result # Fattar inte riktigt vad denna gör
 
 train = train["CO2"]
 # Use auto_arima to find the best ARIMA model for our data
-auto_model = auto_arima(train, seasonal=False, trace=True, error_action='ignore', suppress_warnings=True)
+# auto_model = auto_arima(train, seasonal=False, trace=True, error_action='ignore', suppress_warnings=True)
 
 # Display the summary of the best model found
-auto_model.summary()
+# auto_model.summary()
 
 
 #######################################################################################
@@ -70,7 +70,7 @@ data.index = pd.DatetimeIndex(data.index).to_period('1min')
 temp_data = data['CO2']
 
 # Split the data into train and test sets (78%0 train, 20% test)
-split_point = int(0.8 * len(temp_data))
+split_point = int(0.7 * len(temp_data))
 train, test = temp_data[:split_point], temp_data[split_point:]
                                                            
 # Fit the ARIMA(2,1,2) model to the training data
