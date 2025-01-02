@@ -58,14 +58,14 @@ fitted_model = model.fit()
 # Stepwise Update and Forecast
 # Batches can only be in something divisible with the total number.
 # [1, 2, 7, 11, 14, 19, 22, 38, 77, 133, 154, 209, 266, 418, 1463, 2926]
-batch_size = 22
+batch_size = 77
 forecasts = []
 true_values = []
 
 current_train = train.copy()
 
 # Iterate in batches
-for i in range(0, len(test), batch_size):  
+for i in range(0, len(test), batch_size):
     batch = test.iloc[i:i+batch_size]
     print(f'{i} out of 2926')
     
