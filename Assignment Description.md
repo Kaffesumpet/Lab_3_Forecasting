@@ -14,8 +14,8 @@ Moving Average (MA): The MA component models the error of the model as a combina
 Tasks:
 
 1. You need to analyse multiple columns of the provided dataset. 
-   1.1. [ ] Show scatterplots and 
-   1.2. [ ] Correlation matrices of chosen columns. 
+   1.1. [X] Show scatterplots and 
+   1.2. [X] Correlation matrices of chosen columns. 
    1.3. [ ] Explain what you understood.
 
 2. [X] Use “adfuller” to understand if your data is stationary
@@ -24,9 +24,9 @@ Tasks:
 
 4. [X] Forecasting: Train and test CO2 data with 70% training and 30% test. You can increase the training size up to 80%.
 
-5. [ ] Plot your forecast with actual values as shown in the below figure. Use stepwise approach for better forecast values.
+5. [x] Plot your forecast with actual values as shown in the below figure. Use stepwise approach for better forecast values.
 
-6. [ ] Show MAE value of the test
+6. [x] Show MAE value of the test
 
 7. [ ] Discuss your results and provide your reflection
 
