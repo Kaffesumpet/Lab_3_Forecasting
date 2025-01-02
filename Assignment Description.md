@@ -14,6 +14,8 @@ Moving Average (MA): The MA component models the error of the model as a combina
 Tasks:
 
 1. You need to analyse multiple columns of the provided dataset. 
+
+
    1.1. [X] Show scatterplots and 
    1.2. [X] Correlation matrices of chosen columns. 
    1.3. [ ] Explain what you understood.

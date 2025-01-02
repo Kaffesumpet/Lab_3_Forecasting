@@ -33,13 +33,13 @@ auto_model = auto_arima(train,
                         suppress_warnings=True)
 
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# Part Two                                                 #
-# Use Arima with the Auto Arima                            #
-# Stepwise update, iterate in batches,                     #
-# forecast values, and update the model with observed data #
-# Then plot and caculate MAE                               #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #  
+# Part Two                                                  #
+# Use Arima with the Auto Arima results                      #
+# Stepwise update, iterate in batches,                      #
+# forecast values, and update the model with observed data  #
+# Then plot and caculate MAE                                #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 data = pd.read_csv('dataset.csv', index_col='date')
 
@@ -58,7 +58,7 @@ fitted_model = model.fit()
 # Stepwise Update and Forecast
 # Batches can only be in something divisible with the total number.
 # [1, 2, 7, 11, 14, 19, 22, 38, 77, 133, 154, 209, 266, 418, 1463, 2926]
-batch_size = 77
+batch_size = 1
 forecasts = []
 true_values = []
 
